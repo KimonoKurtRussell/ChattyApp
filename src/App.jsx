@@ -5,45 +5,37 @@ import ChatBar from './ChatBar.jsx';
 
 
 
-const chattyUsers = {
-  currentUser: {name: "Bob"},
-  messages: [
-    {
-      username: "Bob",
-      content: "Has anyone seen my marbles?",
-    },
-    {
-      username: "Anonymous",
-      content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-    }
-    ]
-}
-
-
 
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = chattyUsers;
+    this.state = {
+    currentUser: {name: "Bob"},
+    messages: []
+    }
     console.log("constructor")
   }
 
 
 componentDidMount() {
-  console.log("componentDidMount");
-  setTimeout(() => {
-    console.log("Simulating incoming message");
-    const newMessage = {id: 3, username: "Michelle", content: "Hello there! This will take 3 seconds to show up."};
-    const messages = this.state.messages.concat(newMessage)
+    this.socket = new WebSocket('ws://localhost:3001');
+    this.socket.onContent = (event) => {
+      const parsedContent = JSON.parse(event.data)
+      const newMessage = {content: parsedContent.content};
+      const messages = this.state.messages.concat(newMessage)
     this.setState({messages: messages})
-  }, 3000);
+    }
+    this.socket.onopen = (event) => {
+      console.log("Connected to Server")
+    }
+    console.log("DidMount")
 }
 
 _handleKeyPress = (username, userContent) => {
   const newMessage = {username: username, content: userContent};
-  const messages = this.state.messages.concat(newMessage)
-  this.setState({messages:messages})
+  this.socket.send(JSON.stringify(newMessage))
+
 
 }
 
