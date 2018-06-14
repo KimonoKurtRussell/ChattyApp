@@ -24,8 +24,8 @@ wss.on('connection', (ws) => {
 
 ws.on('message', message => {
   const newMessage = JSON.parse(message)
-  const uuid = uuidv4();
-  newMessage.id = uuid
+  const uniqueKey = uuidv4();
+  newMessage.id = uniqueKey;
   console.log('Server Recived: ', newMessage)
 
 wss.clients.forEach(client => {

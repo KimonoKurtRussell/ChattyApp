@@ -3,20 +3,15 @@ import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
-
-
-
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    currentUser: {name: "Bob"},
+    currentUser: [],
     messages: []
     }
     console.log("constructor")
   }
-
 
 componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
@@ -35,12 +30,15 @@ componentDidMount() {
 _handleKeyPressContent = (username, userContent) => {
   const newMessage = {username: username, content: userContent};
   this.socket.send(JSON.stringify(newMessage))
-
-
 }
 
+_handleKeyPressUserName = (username) => {
+  const newUsername = {username: username};
+  this.socket.send(JSON.stringify(newUsername))
+  this.setState({currentUser:newUsername})
+}
 
-  render() {
+render() {
     console.log("did render")
     return (
         <div>
@@ -48,7 +46,7 @@ _handleKeyPressContent = (username, userContent) => {
             <a href="/" className="navbar-brand">Chatty</a>
           </nav>
           <MessageList messages={this.state.messages}/>
-          <ChatBar submitMessage={this._handleKeyPressContent} currentUser={this.state.currentUser}/>
+          <ChatBar userEntry={this._handleKeyPressUserName} messageEntry={this._handleKeyPressContent} currentUser={this.state.currentUser}/>
         </div>
         );
    }
