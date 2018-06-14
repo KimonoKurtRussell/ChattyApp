@@ -20,9 +20,9 @@ class App extends Component {
 
 componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
-    this.socket.onContent = (event) => {
+    this.socket.onmessage = (event) => {
       const parsedContent = JSON.parse(event.data)
-      const newMessage = {content: parsedContent.content};
+      const newMessage = {id: parsedContent.id, username: parsedContent.username, content: parsedContent.content };
       const messages = this.state.messages.concat(newMessage)
     this.setState({messages: messages})
     }
