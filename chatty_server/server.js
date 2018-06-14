@@ -26,7 +26,12 @@ ws.on('message', message => {
   const newMessage = JSON.parse(message)
   const uniqueKey = uuidv4();
   newMessage.id = uniqueKey;
-  console.log('Server Recived: ', newMessage)
+  if (newMessage.type === 'postMessage') {
+    newMessage.type = 'incomingMessage'
+  } else {
+    newMessage.type = 'incomingNotification'
+  }
+   console.log('Server Recived: ', newMessage)
 
 wss.clients.forEach(client => {
       client.send(JSON.stringify(newMessage));
