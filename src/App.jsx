@@ -7,7 +7,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    currentUser: [],
+    currentUser: {username:"Bob"},
     messages: []
     }
     console.log("constructor")
@@ -34,7 +34,6 @@ _handleKeyPressContent = (username, userContent) => {
 
 _handleKeyPressUserName = (username) => {
   const newUsername = {username: username};
-  this.socket.send(JSON.stringify(newUsername))
   this.setState({currentUser:newUsername})
 }
 
@@ -46,13 +45,13 @@ render() {
             <a href="/" className="navbar-brand">Chatty</a>
           </nav>
           <MessageList messages={this.state.messages}/>
+          <div className="notification">
+             <span class="notification-content">Anonymous1 changed their name to nomnom.</span>
+           </div>
           <ChatBar userEntry={this._handleKeyPressUserName} messageEntry={this._handleKeyPressContent} currentUser={this.state.currentUser}/>
         </div>
         );
    }
  }
-
-
-
 
 export default App;
