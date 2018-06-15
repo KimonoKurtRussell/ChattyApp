@@ -11,39 +11,49 @@ class App extends Component {
     this.state = {
       currentUser: {username:"Anonymous"},
       messages:[],
-      activeUsers: {}
+      activeUsers: 1
     }
   }
 
-componentDidMount() {
+  componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001');
     this.socket.onmessage = (event) => {
       const parsedContent = JSON.parse(event.data)
-        if (parsedContent.type === "incomingNotification"){
-          parsedContent.content =`${this.state.currentUser.username}'s username has changed to ${parsedContent.username}`
-          const newMessage = {id: parsedContent.id, username: parsedContent.username, content: parsedContent.content, type: parsedContent.type};
-          const messages = this.state.messages.concat(newMessage)
-          this.setState({messages: messages, currentUser: {username: parsedContent.username}})
-        } else {
-        // console.log("parsedContent", parsedContent)
-          const newMessage = {id: parsedContent.id, username: parsedContent.username, content: parsedContent.content, type: parsedContent.type};
-          const messages = this.state.messages.concat(newMessage)
-          this.setState({messages: messages, currentUser: {username: parsedContent.username}})
-        }
-    }
-      this.socket.onopen = (event) => {
+      let newMessage = null
+      let messages = null
+      switch (parsedContent.type) {
+      case "incomingNotification" :
+        parsedContent.content =`${this.state.currentUser.username}'s username has changed to ${parsedContent.username}`
+        newMessage = {id: parsedContent.id, content: parsedContent.content, type: parsedContent.type};
+        messages = this.state.messages.concat(newMessage)
+        this.setState({messages: messages, currentUser: {username: parsedContent.username}})
+        break
+      case "incomingMessage" :
+        console.log("parsedContent", parsedContent)
+        newMessage = {id: parsedContent.id, username: parsedContent.username, content: parsedContent.content, type: parsedContent.type};
+        messages = this.state.messages.concat(newMessage)
+        this.setState({messages: messages, currentUser: {username: parsedContent.username}})
+        break
+      case "userCount" :
+        this.setState({activeUsers: parsedContent.userCount})
 
       }
-}
+    }
+    this.socket.onopen = (event) => {
+
+    }
+  }
 
 _handleKeyPressContent = (userContent) => {
   const newMessage = {username: this.state.currentUser.username, content: userContent, type: "postMessage"};
   this.socket.send(JSON.stringify(newMessage))
+  // console.log("message send", newMessage)
 }
 
 _handleKeyPressUserName = (username) => {
   const newUsername = {username: username, type: "postNotification"};
   this.socket.send(JSON.stringify(newUsername))
+  // console.log("username:", newUsername)
 }
 
 render() {
@@ -51,6 +61,8 @@ render() {
         <div>
           <nav className="navbar">
             <a href="/" className="navbar-brand">Chatty</a>
+            <h3 className = "activeUsers">{this.state.activeUsers}</h3>
+
           </nav>
           <MessageList messages={this.state.messages}/>
           <div className="message system">
