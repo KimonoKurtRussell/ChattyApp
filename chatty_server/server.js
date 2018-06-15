@@ -21,6 +21,14 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
+  users = {
+    type: "userCount",
+    userCount: wss.clients.size
+  };
+  console.log(users)
+  wss.clients.forEach(client => {
+    client.send(JSON.stringify(users));
+  });
 
 ws.on('message', message => {
   const newMessage = JSON.parse(message)
@@ -34,7 +42,7 @@ ws.on('message', message => {
    console.log('Server Recived: ', newMessage)
 
 wss.clients.forEach(client => {
-      client.send(JSON.stringify(newMessage));
+      client.send(JSON.stringify(newMessage, wss.clients.size));
     })
   })
 
