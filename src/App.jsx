@@ -61,7 +61,7 @@ render() {
         <div>
           <nav className="navbar">
             <a href="/" className="navbar-brand">Chatty</a>
-            <h3 className = "activeUsers">{this.state.activeUsers}</h3>
+            <h3 className = "activeUsers">Current Users Online {this.state.activeUsers}</h3>
 
           </nav>
           <MessageList messages={this.state.messages}/>

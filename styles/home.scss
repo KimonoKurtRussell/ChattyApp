@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 body {
-      background: white;
+      background: #eee;
       color: black;
       font-family: 'Open Sans', sans-serif;
       font-size: 14px;
@@ -9,7 +9,7 @@ body {
     }
 
     .chatbar {
-      background: blue;
+      background: #6F7F7E;
       border-top: 1px solid black;
       bottom: 0;
       display: flex;
@@ -43,6 +43,7 @@ body {
     }
 
     .message.system {
+      color: red;
       font-style: italic;
       padding: 5px 20px;
     }
@@ -64,8 +65,8 @@ body {
     }
 
     .navbar {
-      background: red;
-      border-bottom: 1px solid black;
+      background: #6A3DFF;
+      box-shadow: 10px 10px 13px rgba(0,0,0,.1);
       height: 60px;
       left: 0;
       padding: 0 10px;
@@ -75,7 +76,8 @@ body {
     }
 
     .navbar-brand {
-      color: inherit;
+
+      color: #FFEF57;
       display: block;
       float: left;
       font-weight: 700;
@@ -83,5 +85,12 @@ body {
       height: 60px;
       line-height: 60px;
       padding: 0 10px;
-      text-decoration: none;
+      text-decoration: bold;
+    }
+
+    .activeUsers {
+      float:right;
+      margin-top:20px;
+      margin-right: 20px;
+      color: #FFEF57;
     }
