@@ -1,41 +1,22 @@
-React Boilerplate
+ChattApp
 =====================
 
-A minimal and light dev environment for ReactJS.
+A ligthweight chat app for browsers
 
-### Usage
+### About
 
-Clone the boilerplate and create your own git repo.
+A chatt app that allows you to talk to others by setting a username and outputting text entered into the message area.  Notifies others as to who has changed their username while in the app. Counts the number of people chatting in the top right corner.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
 
-Install the dependencies and start the server.
+### ScreenShots
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+! ["Screenshot of overall app"]()
 
-### Static Files
+! ["Screenshot of a conversation with username changes"]()
 
-You can store static files like images, fonts, etc in the `build` folder.
+! ["Screenshot of dynamic usercount"]()
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
 
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
 
 ### Dependencies
 
