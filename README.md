@@ -10,11 +10,11 @@ A chatt app that allows you to talk to others by setting a username and outputti
 
 ### ScreenShots
 
-! ["Screenshot of overall app"]()
+! ["Screenshot of overall app"](https://github.com/KimonoKurtRussell/ChattyApp/blob/master/Docs/Overall%20view%20of%20loaded%20app.png?raw=true)
 
-! ["Screenshot of a conversation with username changes"]()
+! ["Screenshot of a conversation with username changes"](https://github.com/KimonoKurtRussell/ChattyApp/blob/master/Docs/Message%20list%20with%20username%20changes%20and%20messages%20sent.png?raw=true)
 
-! ["Screenshot of dynamic usercount"]()
+! ["Screenshot of dynamic usercount"](https://github.com/KimonoKurtRussell/ChattyApp/blob/master/Docs/Dynamic%20User%20Count.png?raw=true)
 
 
 
