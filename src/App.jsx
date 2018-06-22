@@ -23,16 +23,15 @@ class App extends Component {
       let messages = null
       switch (parsedContent.type) {
       case "incomingNotification" :
-        parsedContent.content =`${this.state.currentUser.username}'s username has changed to ${parsedContent.username}`
+        parsedContent.content =`${parsedContent.oldUserName}'s username has changed to ${parsedContent.username}`
         newMessage = {id: parsedContent.id, content: parsedContent.content, type: parsedContent.type};
         messages = this.state.messages.concat(newMessage)
-        this.setState({messages: messages, currentUser: {username: parsedContent.username}})
+        this.setState({messages: messages})
         break
       case "incomingMessage" :
-        console.log("parsedContent", parsedContent)
         newMessage = {id: parsedContent.id, username: parsedContent.username, content: parsedContent.content, type: parsedContent.type};
         messages = this.state.messages.concat(newMessage)
-        this.setState({messages: messages, currentUser: {username: parsedContent.username}})
+        this.setState({messages: messages})
         break
       case "userCount" :
         this.setState({activeUsers: parsedContent.userCount})
@@ -51,8 +50,11 @@ _handleKeyPressContent = (userContent) => {
 }
 
 _handleKeyPressUserName = (username) => {
-  const newUsername = {username: username, type: "postNotification"};
+  const newUsername = {username: username, oldUserName:this.state.currentUser.username, type: "postNotification"};
   this.socket.send(JSON.stringify(newUsername))
+  const newCurrentUser = {username: username}
+  this.setState({currentUser: newCurrentUser})
+
   // console.log("username:", newUsername)
 }
 
